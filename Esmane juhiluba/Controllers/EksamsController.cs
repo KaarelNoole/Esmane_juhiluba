@@ -78,6 +78,87 @@ namespace Esmane_juhiluba.Controllers
             return View(await model.ToListAsync());
         }
 
+        public async Task<IActionResult> PassFail(int Id, string Osa, int Tulemus)
+        {
+            var eksam = await _context.Eksam.FindAsync(Id);
+            if (eksam == null)
+            {
+                return NotFound();
+            }
+            switch (Osa)
+            {
+                case nameof(eksam.Sõidu):
+                    {
+                        eksam.Sõidu = Tulemus;
+                        break;
+                    }
+                default:
+                    {
+                        return NotFound();
+                    }
+            }
+            try
+            {
+                _context.Update(eksam);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EksamExists(eksam.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(Osa);
+        }
+
+        public async Task<IActionResult> Luba()
+        {
+            var model = _context.Eksam.Select(e =>
+            new LubaModel()
+            {
+                Id = e.Id,
+                Eesnimi = e.Eesnimi,
+                Perenimi = e.Perenimi,
+                Tervisekontroll = e.Tervisekontroll,
+                Teooria = e.Teooria,
+                //Sõidu = e.Sõidu == -1 ? "." : e.Sõidu == 1 ? "Õnnestus" : "Põrus",
+                //Luba = e.Luba == 1 ? "Väljastatud" : e.Sõidu == 1 ? "Väljasta" : "."
+            });
+
+            return View(await model.ToListAsync());
+        }
+
+        public async Task<IActionResult> VäljastaLuba(int Id)
+        {
+            var eksam = await _context.Eksam.FindAsync(Id);
+            if (eksam == null)
+            {
+                return NotFound();
+            }
+            eksam.Luba = 1;
+            try
+            {
+                _context.Update(eksam);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EksamExists(eksam.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction("Luba");
+        }
 
         // GET: Eksams
         public async Task<IActionResult> Index()

@@ -5,15 +5,14 @@ using System.Threading.Tasks;
 
 namespace Esmane_juhiluba.Models
 {
-    public class Eksam
+    public class LubaModel
     {
         public int Id { get; set; }
-        
         public string Eesnimi { get; set; }
         public string Perenimi { get; set; }
-        public int Tervisekontroll { get; set; } = -1;
-        public int Teooria { get; set; } = -1;
-        public int Sõidu { get; set; } = -1;
-        public int Luba { get; set; } = -1;
+        public int Tervisekontroll { get; set; }
+        public int Teooria { get; set; }
+        public int Sõidu { get; set; }
+        public int Luba { get; set; }
     }
 }
