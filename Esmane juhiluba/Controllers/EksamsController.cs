@@ -37,14 +37,15 @@ namespace Esmane_juhiluba.Controllers
             return View(eksam);
         }
 
-        //public async Task<IActionResult> Tervisekontroll([Bind("Id, Tervisekontroll")] Eksam eksam)
-        //{
-
-        //}
+        public async Task<IActionResult> Teooria()
+        {
+            var model = _context.Eksam.Where(e => e.Teooria == -1);
+            return View(await model.ToListAsync());
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Teooria([Bind("Id,Teooria")] Eksam tulemus)
+        public async Task<IActionResult> Teooriatulemus([Bind("Id,Teooria")] Eksam tulemus)
         {
             var eksam = await _context.Eksam.FindAsync(tulemus.Id);
             if (eksam == null)
@@ -78,9 +79,40 @@ namespace Esmane_juhiluba.Controllers
             return View(await model.ToListAsync());
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SõidupäevikuTulemus([Bind("Id, Sõidupäevik")] Eksam tulemus)
+        {
+            var eksam = await _context.Eksam.FindAsync(tulemus.Id);
+            if (eksam == null)
+            {
+                return NotFound();
+            }
+            eksam.Sõidupäevik = tulemus.Sõidupäevik;
+            try
+            {
+                _context.Update(eksam);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EksamExists(eksam.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+
+            }
+            return RedirectToAction(nameof(SõiduPäevik));
+        }
+
         public async Task<IActionResult> Sõidu()
         {
-            var model = _context.Eksam.Where(e => e.Teooria >= 9 && e.Sõidu == -1);
+            var model = _context.Eksam.Where(e =>e.Teooria >=9 && e.Sõidupäevik >= 24 && e.Sõidu == -1);
             return View(await model.ToListAsync());
         }
 
@@ -132,8 +164,8 @@ namespace Esmane_juhiluba.Controllers
                 Perenimi = e.Perenimi,
                 Teooria = e.Teooria,
                 Sõidupäevik = e.Sõidupäevik,
-                //Sõidu = e.Sõidu == -1 ? "." : e.Sõidu == 1 ? "Õnnestus" : "Põrus",
-                //Luba = e.Luba == 1 ? "Väljastatud" : e.Sõidu == 1 ? "Väljasta" : "."
+                Sõidu = e.Sõidu == -1 ? "." : e.Sõidu == 1 ? "Õnnestus" : "Põrus",
+                Luba = e.Luba == 1 ? "Väljastatud" : e.Sõidu == 1 ? "Väljasta" : "."
             });
 
             return View(await model.ToListAsync());
@@ -171,7 +203,6 @@ namespace Esmane_juhiluba.Controllers
         {
             return View(await _context.Eksam.ToListAsync());
         }
-
         // GET: Eksams/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -201,7 +232,7 @@ namespace Esmane_juhiluba.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Eesnimi,Perenimi,Teooria,Sõidu,Luba")] Eksam eksam)
+        public async Task<IActionResult> Create([Bind("Id,Eesnimi,Perenimi,Teooria,Sõidupäevik,Sõidu,Luba")] Eksam eksam)
         {
             if (ModelState.IsValid)
             {
@@ -233,7 +264,7 @@ namespace Esmane_juhiluba.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Eesnimi,Perenimi,Teooria,Sõidu,Luba")] Eksam eksam)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Eesnimi,Perenimi,Sõidupäevik,Teooria,Sõidu,Luba")] Eksam eksam)
         {
             if (id != eksam.Id)
             {

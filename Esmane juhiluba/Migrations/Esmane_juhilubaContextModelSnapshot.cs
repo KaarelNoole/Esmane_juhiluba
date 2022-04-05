@@ -37,10 +37,10 @@ namespace Esmane_juhiluba.Migrations
                     b.Property<int>("Sõidu")
                         .HasColumnType("int");
 
-                    b.Property<int>("Teooria")
+                    b.Property<int>("Sõidupäevik")
                         .HasColumnType("int");
 
-                    b.Property<int>("Tervisekontroll")
+                    b.Property<int>("Teooria")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

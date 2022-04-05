@@ -52,7 +52,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Sõidu)
                 </td>
-                @*<td>
+                <td>
                     @if (item.Luba == "Väljasta")
                     {
                         <a asp-action="VäljastaLuba" asp-route-id="@item.Id">Väljasta</a>
@@ -61,13 +61,8 @@
                     {
                         @Html.DisplayFor(modelItem => item.Luba)
                     }
-                </td>*@
-
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
+
             </tr>
         }
     </tbody>

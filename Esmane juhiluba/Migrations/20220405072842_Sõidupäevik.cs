@@ -2,7 +2,7 @@
 
 namespace Esmane_juhiluba.Migrations
 {
-    public partial class tervisekontroll : Migration
+    public partial class Sõidupäevik : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,7 +25,7 @@ namespace Esmane_juhiluba.Migrations
                 oldNullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Tervisekontroll",
+                name: "Sõidupäevik",
                 table: "Eksam",
                 type: "int",
                 nullable: false,
@@ -46,7 +46,7 @@ namespace Esmane_juhiluba.Migrations
                 table: "Eksam");
 
             migrationBuilder.DropColumn(
-                name: "Tervisekontroll",
+                name: "Sõidupäevik",
                 table: "Eksam");
 
             migrationBuilder.AlterColumn<string>(

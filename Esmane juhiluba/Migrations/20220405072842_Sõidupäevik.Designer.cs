@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Esmane_juhiluba.Migrations
 {
     [DbContext(typeof(Esmane_juhilubaContext))]
-    [Migration("20220208123833_tervisekontroll")]
-    partial class tervisekontroll
+    [Migration("20220405072842_Sõidupäevik")]
+    partial class Sõidupäevik
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,10 +39,10 @@ namespace Esmane_juhiluba.Migrations
                     b.Property<int>("Sõidu")
                         .HasColumnType("int");
 
-                    b.Property<int>("Teooria")
+                    b.Property<int>("Sõidupäevik")
                         .HasColumnType("int");
 
-                    b.Property<int>("Tervisekontroll")
+                    b.Property<int>("Teooria")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
