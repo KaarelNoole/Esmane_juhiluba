@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Esmane_juhiluba.Models.Eksam>
+
+@{ 
+    ViewData["Title"] = "Sõidupäevik";
+}
+
+<h1>Sõidupäevik</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(Model => Model.Eesnimi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Perenimi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sõidupäevik)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Eesnimi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Perenimi)
+                    </td>
+                    <td>
+                        <form asp-action="SõidupäevikuTulemus">
+                            <input type="hidden" asp-for="@item.Id" name="@nameof(item.Id)" />
+                            <div class="d-flex">
+                                <div class="form-group mr-1">
+                                    <input type="number" value="@item.Sõidupäevik" name="@nameof(item.Sõidupäevik)"min="0" max="24" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Salvesta" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            }
+    </tbody>
+
+</table>

@@ -10,8 +10,8 @@ namespace Esmane_juhiluba.Models
         public int Id { get; set; }
         public string Eesnimi { get; set; }
         public string Perenimi { get; set; }
-        public int Tervisekontroll { get; set; }
         public int Teooria { get; set; }
+        public int Sõidupäevik { get; set; }
         public int Sõidu { get; set; }
         public int Luba { get; set; }
     }

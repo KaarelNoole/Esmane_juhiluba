@@ -72,6 +72,12 @@ namespace Esmane_juhiluba.Controllers
             return RedirectToAction(nameof(Teooria));
         }
 
+        public async Task<IActionResult> SõiduPäevik()
+        {
+            var model = _context.Eksam.Where(e => e.Sõidupäevik == -1);
+            return View(await model.ToListAsync());
+        }
+
         public async Task<IActionResult> Sõidu()
         {
             var model = _context.Eksam.Where(e => e.Teooria >= 9 && e.Sõidu == -1);
@@ -124,8 +130,8 @@ namespace Esmane_juhiluba.Controllers
                 Id = e.Id,
                 Eesnimi = e.Eesnimi,
                 Perenimi = e.Perenimi,
-                Tervisekontroll = e.Tervisekontroll,
                 Teooria = e.Teooria,
+                Sõidupäevik = e.Sõidupäevik,
                 //Sõidu = e.Sõidu == -1 ? "." : e.Sõidu == 1 ? "Õnnestus" : "Põrus",
                 //Luba = e.Luba == 1 ? "Väljastatud" : e.Sõidu == 1 ? "Väljasta" : "."
             });
