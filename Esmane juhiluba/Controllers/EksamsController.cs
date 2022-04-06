@@ -32,7 +32,7 @@ namespace Esmane_juhiluba.Controllers
             {
                 _context.Add(eksam);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Luba));
             }
             return View(eksam);
         }
@@ -75,8 +75,8 @@ namespace Esmane_juhiluba.Controllers
 
         public async Task<IActionResult> SõiduPäevik()
         {
-            var model = _context.Eksam.Where(e => e.Sõidupäevik == -1);
-            return View(await model.ToListAsync());
+            var model = _context.Eksam.Where(e => e.Sõidupäevik !<= 23);
+            return View(await model.ToListAsync()); 
         }
 
 
@@ -151,6 +151,9 @@ namespace Esmane_juhiluba.Controllers
                     throw;
                 }
             }
+
+
+
             return RedirectToAction(Osa);
         }
 
